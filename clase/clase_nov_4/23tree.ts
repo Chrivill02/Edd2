@@ -25,24 +25,30 @@ class Tree23 {
         if (node.getLeftChild() === null && node.getRightChild() === null) {
             return this.insertInLeaf(node, data);
         }
-
+    
         if (data < node.getKey1()!) {
-            let splitResult = this.insertRecursive(node.getLeftChild()!, data);
-            if (splitResult) {
-                return this.SplitInsert(node, splitResult);
+            if (node.getLeftChild() !== null) { // Verifica si el hijo izquierdo no es null
+                let splitResult = this.insertRecursive(node.getLeftChild()!, data);
+                if (splitResult) {
+                    return this.SplitInsert(node, splitResult);
+                }
             }
         } else if (node.getKey2() === null || data < node.getKey2()!) {
-            let splitResult = this.insertRecursive(node.getMiddleChild()!, data);
-            if (splitResult) {
-                return this.SplitInsert(node, splitResult);
+            if (node.getMiddleChild() !== null) { // Verifica si el hijo medio no es null
+                let splitResult = this.insertRecursive(node.getMiddleChild()!, data);
+                if (splitResult) {
+                    return this.SplitInsert(node, splitResult);
+                }
             }
         } else {
-            let splitResult = this.insertRecursive(node.getRightChild()!, data);
-            if (splitResult) {
-                return this.SplitInsert(node, splitResult);
+            if (node.getRightChild() !== null) { // Verifica si el hijo derecho no es null
+                let splitResult = this.insertRecursive(node.getRightChild()!, data);
+                if (splitResult) {
+                    return this.SplitInsert(node, splitResult);
+                }
             }
         }
-
+    
         return null;
     }
 
@@ -91,4 +97,41 @@ class Tree23 {
             return { promotion: node.getKey1()!, newChild };
         }
     }
+
+    public printTree(): void {
+        if (this.root === null) {
+            console.log("El árbol está vacío");
+        } else {
+            this.printRecursive(this.root, 0);
+        }
+    }
+
+    private printRecursive(node: TreeNode, level: number): void {
+        if (node === null) {
+            return;
+        }
+
+        let indent = " ".repeat(level * 4); // Añade sangría para cada nivel
+        console.log(`${indent}Nivel ${level}: (${node.getKey1() ?? " "}, ${node.getKey2() ?? " "})`);
+
+        // Imprime los hijos si existen
+        if (node.getLeftChild()) {
+            this.printRecursive(node.getLeftChild()!, level + 1);
+        }
+        if (node.getMiddleChild()) {
+            this.printRecursive(node.getMiddleChild()!, level + 1);
+        }
+        if (node.getRightChild()) {
+            this.printRecursive(node.getRightChild()!, level + 1);
+        }
+    }
 }
+
+let tree: Tree23 = new Tree23()
+tree.insert(5)
+tree.insert(6)
+tree.insert(10)
+tree.insert(3)
+tree.insert(11)
+tree.insert(24)
+console.log(tree.printTree())

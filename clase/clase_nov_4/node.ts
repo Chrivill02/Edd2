@@ -31,11 +31,11 @@ export class TreeNode {
         return this.rightChild;
     }
 
-    public setKey1(key: number): void {
+    public setKey1(key: number | null): void {
         this.key1 = key;
     }
 
-    public setKey2(key: number): void {
+    public setKey2(key: number | null): void {
         this.key2 = key;
     }
 
